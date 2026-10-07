@@ -117,8 +117,9 @@ def register():
         elif User.query.filter((User.username == f['username']) | (User.email == f['email'])).first():
             flash('Username or email already exists', 'error')
         else:
-            u = User(username=f['username'], email=f['email'], phone=f['phone'], role=f['role'],
-                     full_name=f['full_name'], password_hash=generate_password_hash(f['password']))
+           u = User(username=f['username'], email=f['email'], phone=f['phone'], role=f['role'],
+         full_name=f['full_name'], password_hash=generate_password_hash(f['password']),
+         active=True)
             if f['role'] == 'doctor':
                 u.specialization = f.get('specialization'); u.qualification = f.get('qualification')
                 u.experience = int(f.get('experience') or 0); u.fee = int(f.get('fee') or 0)
