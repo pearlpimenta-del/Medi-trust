@@ -116,7 +116,7 @@ def register():
             flash('Password must be at least 6 characters', 'error')
         elif User.query.filter((User.username == f['username']) | (User.email == f['email'])).first():
             flash('Username or email already exists', 'error')
-       else:
+          else:
         u = User(
             username=f['username'],
             email=f['email'],
@@ -140,11 +140,13 @@ def register():
 
         db.session.add(u)
         db.session.commit()
+
         flash(
             'Registered! Please login.' +
             (' Doctor accounts need admin approval.' if u.role == 'doctor' else ''),
             'success'
         )
+
         return redirect(url_for('login'))
 
     return render_template('register.html')
