@@ -1,0 +1,8 @@
+{% extends 'base.html' %}{% block content %}
+<form class="card" method="post"><h2>Generate Report</h2>
+<label>Select Patient</label><select name="patient_id" required>{% for p in patients %}<option value="{{ p.id }}">{{ p.full_name }}</option>{% endfor %}</select>
+<div class="grid"><div><label>Blood Pressure</label><input name="bp"></div><div><label>Heart Rate</label><input name="hr"></div><div><label>Cholesterol</label><input name="cholesterol"></div>
+<div><label>Blood Sugar</label><input name="sugar"></div><div><label>ECG Result</label><input name="ecg"></div><div><label>Echocardiogram</label><input name="echo"></div></div>
+<label>Diagnosis</label><textarea name="diagnosis"></textarea><label>Doctor's Notes</label><textarea name="notes"></textarea>
+<h3>Medicines</h3><div id="meds"></div><button type="button" class="btn teal sm" onclick="addMedicine()">+ Add Medicine</button><br><br><button class="btn">Generate Report</button></form>
+<script>addMedicine()</script>{% endblock %}

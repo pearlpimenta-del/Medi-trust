@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+{% block hero %}<div class="hero"><h1>Welcome to MediTrust Clinic</h1><p>Your trusted digital healthcare companion for appointments, doctors and health records.</p>
+<a class="btn teal" href="{{ url_for('book') }}">Book Appointment</a> <a class="btn" href="{{ url_for('login') }}">Login</a> <a class="btn" href="{{ url_for('register') }}">Register</a></div>{% endblock %}
+{% block content %}<h2>Our Services</h2><div class="grid">
+{% for t in ['Online Appointment Booking','Doctor Consultation','Health Reports','Medical History','Follow-up Appointments','Secure Patient Records'] %}<div class="card"><h3>{{ t }}</h3><p>Simple, secure and fast.</p></div>{% endfor %}</div>
+<h2>Our Doctors</h2><div class="grid">{% for d in docs %}<div class="card"><h3>Dr. {{ d.full_name }}</h3>{{ d.specialization }}<br>{{ d.experience }} yrs experience</div>{% endfor %}</div>{% endblock %}

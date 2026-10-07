@@ -1,0 +1,7 @@
+{% extends 'base.html' %}{% block content %}<div class="card"><h2>MediTrust Clinic – Health Report #{{ r.id }}</h2>
+<p><b>Patient:</b> {{ r.patient.full_name }} ({{ r.patient.blood_group }}) &nbsp; <b>Doctor:</b> Dr. {{ r.doctor.full_name }} &nbsp; <b>Date:</b> {{ r.report_date }}</p>
+<p>BP: {{ r.bp }} · Heart Rate: {{ r.hr }} · Cholesterol: {{ r.cholesterol }} · Sugar: {{ r.sugar }} · ECG: {{ r.ecg }} · Echo: {{ r.echo }}</p>
+<p><b>Diagnosis:</b> {{ r.diagnosis }}</p><p><b>Doctor's notes:</b> {{ r.notes }}</p>
+<table><tr><th>Medicine</th><th>Dosage</th><th>Frequency</th><th>Duration</th></tr>{% for m in r.medicines %}<tr><td>{{ m.name }}</td><td>{{ m.dosage }}</td><td>{{ m.frequency }}</td><td>{{ m.duration }}</td></tr>{% endfor %}</table>
+<p><small>This report is generated through the MediTrust healthcare management system.</small></p>
+<button class="btn" onclick="window.print()">Print Report / Save as PDF</button></div>{% endblock %}

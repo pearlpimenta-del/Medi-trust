@@ -1,0 +1,9 @@
+{% extends 'base.html' %}{% block content %}
+<h2>Welcome, {% if me.role=='doctor' %}Dr. {% endif %}{{ me.full_name }}</h2>
+<div class="grid">{% for k, v in stats.items() %}<div class="card"><div class="stat">{{ v }}</div>{{ k|capitalize }}</div>{% endfor %}</div><br>
+{% if me.role=='patient' %}<div class="card"><h3>Upcoming Appointment</h3>
+{% for a in upcoming %}Dr. {{ a.doctor.full_name }} ({{ a.doctor.specialization }}) — {{ a.date }} {{ a.time }}{% else %}<div class="empty">No upcoming appointments. <a href="{{ url_for('book') }}">Book one</a></div>{% endfor %}</div>
+<h3>Available Doctors</h3><div class="grid">{% for d in docs %}<div class="card"><h3>Dr. {{ d.full_name }}</h3>{{ d.specialization }} · {{ d.experience }} yrs<br>Fee ₹{{ d.fee }}<br><br><a class="btn sm" href="{{ url_for('book', doctor_id=d.id) }}">Book Appointment</a></div>{% endfor %}</div>{% endif %}
+{% if me.role=='doctor' %}<div class="grid"><div class="card"><h3>Manage Appointments</h3><a class="btn" href="{{ url_for('appointments') }}">Go</a></div>
+<div class="card"><h3>Generate Report</h3><a class="btn" href="{{ url_for('generate_report') }}">Go</a></div>
+<div class="card"><h3>View Reports</h3><a class="btn" href="{{ url_for('reports') }}">Go</a></div></div>{% endif %}{% endblock %}

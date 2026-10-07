@@ -1,0 +1,4 @@
+{% extends 'base.html' %}{% block content %}<h2>Find Doctors</h2>
+<form method="get" class="row"><input name="q" value="{{ q }}" placeholder="Search name or specialization (e.g. Cardiologist)" style="max-width:420px"><button class="btn">Search</button></form>
+<div class="grid">{% for d in docs %}<div class="card"><h3>Dr. {{ d.full_name }}</h3>{{ d.specialization }}<br>{{ d.qualification }}<br>{{ d.experience }} yrs · ₹{{ d.fee }}<p>{{ d.about }}</p>
+<a class="btn sm" href="{{ url_for('book', doctor_id=d.id) }}">Book Appointment</a></div>{% else %}<div class="empty">No doctors found</div>{% endfor %}</div>{% endblock %}
