@@ -1,0 +1,2 @@
+{% extends 'base.html' %}{% block content %}<h2>Notifications</h2>
+{% for n in items %}<div class="card" style="margin-bottom:8px">🔔 {{ n.message }}{% if not n.is_read %} <span class="badge">new</span>{% endif %}</div>{% else %}<div class="card empty">No notifications</div>{% endfor %}{% endblock %}

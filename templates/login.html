@@ -1,0 +1,6 @@
+{% extends 'base.html' %}{% block content %}
+<form class="box card" method="post"><h2>Welcome Back to MediTrust</h2>
+<label>Username / Email</label><input name="username" required>
+<label>Password</label><input type="password" name="password" required>
+<label>Role</label><select name="role"><option value="patient">Patient</option><option value="doctor">Doctor</option><option value="admin">Admin</option></select>
+<button class="btn">Login</button><p>New user? <a href="{{ url_for('register') }}">Register here</a></p></form>{% endblock %}

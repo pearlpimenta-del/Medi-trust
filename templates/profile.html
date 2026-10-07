@@ -1,0 +1,8 @@
+{% extends 'base.html' %}{% block content %}
+<form class="box card" method="post"><h2>My Profile</h2><p>Username: <b>{{ me.username }}</b> · {{ me.email }}</p>
+<label>Full Name</label><input name="full_name" value="{{ me.full_name or '' }}"><label>Phone</label><input name="phone" value="{{ me.phone or '' }}">
+{% if me.role=='patient' %}<label>Date of Birth</label><input type="date" name="dob" value="{{ me.dob or '' }}"><label>Gender</label><input name="gender" value="{{ me.gender or '' }}">
+<label>Blood Group</label><input name="blood_group" value="{{ me.blood_group or '' }}"><label>Emergency Contact</label><input name="emergency_contact" value="{{ me.emergency_contact or '' }}">{% endif %}
+{% if me.role=='doctor' %}<label>Specialization</label><input name="specialization" value="{{ me.specialization or '' }}"><label>Qualification</label><input name="qualification" value="{{ me.qualification or '' }}">
+<label>Experience</label><input type="number" name="experience" value="{{ me.experience or 0 }}"><label>Fee</label><input type="number" name="fee" value="{{ me.fee or 0 }}"><label>About</label><textarea name="about">{{ me.about or '' }}</textarea>{% endif %}
+<button class="btn">Save</button></form>{% endblock %}

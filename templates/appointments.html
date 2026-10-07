@@ -1,0 +1,11 @@
+{% extends 'base.html' %}{% block content %}<h2>Appointments</h2>
+{% if not appts %}<div class="card empty">No appointments yet</div>{% else %}<div class="table-wrap"><table>
+<tr><th>ID</th><th>Patient</th><th>Doctor</th><th>Date</th><th>Time</th><th>Type</th><th>Status</th><th>Actions</th></tr>
+{% for a in appts %}<tr><td>APT{{ 1000+a.id }}</td><td>{{ a.patient.full_name }}</td><td>Dr. {{ a.doctor.full_name }}<br><small>{{ a.doctor.specialization }}</small></td><td>{{ a.date }}</td><td>{{ a.time }}</td><td>{{ a.type }}</td>
+<td><span class="status {{ a.status }}">{{ a.status }}</span></td><td class="row">
+{% if me.role=='patient' %}{% if a.status in ['Pending','Confirmed'] %}<form method="post" action="{{ url_for('appointment_action', id=a.id, action='cancel') }}" data-confirm="Cancel this appointment?"><button class="btn red sm">Cancel</button></form>{% endif %}
+{% if a.status=='Completed' %}<a class="btn sm teal" href="{{ url_for('book', doctor_id=a.doctor_id, followup=1) }}">Book Follow-up</a>{% endif %}{% endif %}
+{% if me.role=='doctor' %}{% if a.status=='Pending' %}<form method="post" action="{{ url_for('appointment_action', id=a.id, action='accept') }}"><button class="btn sm">Accept</button></form><form method="post" action="{{ url_for('appointment_action', id=a.id, action='reject') }}"><button class="btn red sm">Reject</button></form>{% endif %}
+{% if a.status=='Confirmed' %}<form method="post" action="{{ url_for('appointment_action', id=a.id, action='complete') }}"><button class="btn teal sm">Complete</button></form>{% endif %}{% endif %}
+{% if me.role=='admin' and a.status!='Cancelled' %}<form method="post" action="{{ url_for('appointment_action', id=a.id, action='cancel') }}"><button class="btn red sm">Cancel</button></form>{% endif %}
+</td></tr>{% endfor %}</table></div>{% endif %}{% endblock %}

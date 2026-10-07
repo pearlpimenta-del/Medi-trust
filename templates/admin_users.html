@@ -1,0 +1,5 @@
+{% extends 'base.html' %}{% block content %}<h2>Manage Users</h2><div class="table-wrap"><table><tr><th>Name</th><th>Username</th><th>Role</th><th>Status</th><th>Actions</th></tr>
+{% for u in users %}<tr><td>{{ u.full_name }}</td><td>{{ u.username }}</td><td>{{ u.role }}</td><td>{{ 'Active' if u.active else 'Inactive' }}{% if u.role=='doctor' and not u.approved %} (pending approval){% endif %}</td><td class="row">
+{% if u.role!='admin' %}{% if u.role=='doctor' and not u.approved %}<form method="post" action="{{ url_for('admin_user_action', id=u.id, action='approve') }}"><button class="btn sm teal">Approve</button></form>{% endif %}
+<form method="post" action="{{ url_for('admin_user_action', id=u.id, action='toggle') }}"><button class="btn sm">Activate/Deactivate</button></form>
+<form method="post" action="{{ url_for('admin_user_action', id=u.id, action='delete') }}" data-confirm="Delete this user?"><button class="btn red sm">Delete</button></form>{% endif %}</td></tr>{% endfor %}</table></div>{% endblock %}

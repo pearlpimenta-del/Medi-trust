@@ -1,0 +1,9 @@
+{% extends 'base.html' %}{% block content %}
+<form class="box card" method="post"><h2>{% if followup %}Follow-up Appointment{% else %}Book Appointment{% endif %}</h2>
+<label>Select Doctor</label><select name="doctor_id" required onchange="this.form.submit()" formnovalidate>
+<option value="">-- choose --</option>{% for d in docs %}<option value="{{ d.id }}" {{ 'selected' if d.id==doc_id }}>Dr. {{ d.full_name }} - {{ d.specialization }}</option>{% endfor %}</select>
+<label>Date</label><input type="date" name="date" min="{{ today }}" value="{{ sel_date }}" required onchange="this.form.submit()">
+{% if doc_id and sel_date %}<label>Available Time Slots</label><select name="time" required>{% for s in free %}<option>{{ s }}</option>{% else %}<option value="">No slots free</option>{% endfor %}</select>
+<label>Type</label><select name="type"><option>In-person</option><option>Online consultation</option></select>
+<label>Reason for Visit</label><textarea name="reason" required>{{ 'Follow-up visit' if followup }}</textarea><button class="btn">Confirm Appointment</button>
+{% else %}<p>Choose a doctor and date to see available slots.</p>{% endif %}</form>{% endblock %}

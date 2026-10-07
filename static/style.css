@@ -1,0 +1,29 @@
+:root{--navy:#14284b;--blue:#3b82f6;--soft:#eef3fb;--teal:#14b8a6;--grey:#6b7280}
+*{box-sizing:border-box}body{margin:0;font-family:Segoe UI,Arial,sans-serif;background:var(--soft);color:#1f2937}
+a{color:var(--blue);text-decoration:none}
+nav{background:var(--navy);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+nav .logo{color:#fff;font-weight:700;font-size:1.3rem}nav .links a{color:#dbe6ff;margin-left:16px}
+nav .links a:hover{color:#fff}.badge{background:#ef4444;color:#fff;border-radius:10px;padding:1px 7px;font-size:.75rem}
+.container{max-width:1100px;margin:24px auto;padding:0 16px}
+.hero{background:linear-gradient(135deg,var(--navy),#2a4a8a);color:#fff;text-align:center;padding:80px 20px}
+.hero h1{font-size:2.4rem;margin:0 0 10px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.card{background:#fff;border-radius:16px;padding:20px;box-shadow:0 4px 14px rgba(20,40,75,.08);transition:.2s}
+.card:hover{transform:translateY(-3px)}.card h3{margin-top:0;color:var(--navy)}
+.stat{font-size:2rem;font-weight:700;color:var(--blue)}
+.btn{display:inline-block;background:var(--blue);color:#fff;border:0;padding:9px 18px;border-radius:10px;cursor:pointer;font-size:.95rem}
+.btn:hover{opacity:.9}.btn.teal{background:var(--teal)}.btn.red{background:#ef4444}.btn.sm{padding:5px 10px;font-size:.8rem}
+form.box{max-width:520px;margin:30px auto}
+input,select,textarea{width:100%;padding:10px;margin:5px 0 12px;border:1px solid #cbd5e1;border-radius:8px;font:inherit}
+label{font-weight:600;font-size:.9rem}
+table{width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden}
+th,td{padding:10px;text-align:left;border-bottom:1px solid #e5e7eb;font-size:.9rem}th{background:var(--navy);color:#fff}
+.table-wrap{overflow-x:auto}
+.status{padding:3px 10px;border-radius:12px;font-size:.8rem;color:#fff;background:var(--grey)}
+.Confirmed{background:var(--blue)}.Completed{background:var(--teal)}.Cancelled{background:#ef4444}.Pending{background:#f59e0b}
+.toast{padding:12px 16px;border-radius:10px;margin-bottom:10px;color:#fff;animation:fade .4s}
+.toast.success{background:var(--teal)}.toast.error{background:#ef4444}@keyframes fade{from{opacity:0;transform:translateY(-8px)}}
+.row{display:flex;gap:6px;flex-wrap:wrap}.row form{display:inline}
+.empty{text-align:center;color:var(--grey);padding:30px}
+footer{text-align:center;color:var(--grey);padding:24px}
+@media print{nav,footer,.btn,.toast{display:none}body{background:#fff}.card{box-shadow:none}}
