@@ -339,9 +339,9 @@ def seed():
     for i, (n, s, q, e, fee) in enumerate([('Smith', 'Cardiologist', 'MD Cardiology', 12, 800),
             ('Jane', 'Dermatologist', 'MD Dermatology', 8, 600), ('John', 'Neurologist', 'DM Neurology', 15, 900),
             ('Akriti', 'Dentist', 'BDS, MDS', 6, 500), ('Manish', 'Physician', 'MBBS, MD', 10, 400)], 1):
-        docs.append(mk(username=f'doctor{i}', pw='doctor123', role='doctor', full_name=n, email=f'doc{i}@meditrust.com',
-                       phone=f'90000000{i}', specialization=s, qualification=q, experience=e, fee=fee,
-                       about=f'Dr. {n} is an experienced {s.lower()} dedicated to patient care.'))
+      docs.append(mk(username=f'doctor{i}', pw='doctor123', role='doctor', full_name=n, email=f'doc{i}@meditrust.com',
+               phone=f'90000000{i}', specialization=s, qualification=q, experience=e, fee=fee,
+               about=f'Dr. {n} is an experienced {s.lower()} dedicated to patient care.', approved=True))
     db.session.commit()
     db.session.add_all([Appointment(patient_id=p.id, doctor_id=docs[0].id, date='2026-09-09', time='10:30', type='In-person', reason='Chest pain checkup', status='Completed'),
                         Appointment(patient_id=p.id, doctor_id=docs[0].id, date='2026-12-10', time='10:30', type='Online', reason='Follow-up', status='Confirmed')])
