@@ -116,7 +116,7 @@ def register():
             flash('Password must be at least 6 characters', 'error')
         elif User.query.filter((User.username == f['username']) | (User.email == f['email'])).first():
             flash('Username or email already exists', 'error')
-      else:
+    else:
     u = User(username=f['username'], email=f['email'], phone=f['phone'], role=f['role'],
              full_name=f['full_name'], password_hash=generate_password_hash(f['password']))
 
