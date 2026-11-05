@@ -505,6 +505,7 @@ def register():
         password = f.get("password", "")
         confirm = f.get("confirm", "")
         role = f.get("role", "patient")
+        # Any phone number is accepted (duplicates allowed).
         phone = f.get("phone", "").strip() or None
 
         if role not in ("patient", "doctor"):
@@ -513,8 +514,6 @@ def register():
             flash("Please complete all required fields.", "error")
         elif password != confirm:
             flash("Passwords do not match.", "error")
-        elif len(password) < 8:
-            flash("Password must contain at least 8 characters.", "error")
         elif User.query.filter(
             (User.username == username) | (User.email == email)
         ).first():
@@ -569,7 +568,7 @@ def register():
                 """ + field("Years of experience (optional)", "experience", "number", False) + """
                 """ + field("Consultation fee (optional)", "fee", "number", False) + """
             </div>
-            """ + field("Password (minimum 8 characters)", "password", "password") + """
+            """ + field("Password", "password", "password") + """
             """ + field("Confirm password", "confirm", "password") + """
             <button type="submit">Create account</button>
         </form>
@@ -594,15 +593,29 @@ def register():
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
-        username = request.form.get("username", "").strip()
+        identifier = request.form.get("username", "").strip()
         password = request.form.get("password", "")
         role = request.form.get("role", "")
 
-        user = User.query.filter(
-            (User.username == username) | (User.email == username.lower())
-        ).first()
+        # Log in with username, email or phone number. Phone numbers may be
+        # shared by several accounts, so check every match and pick the one
+        # whose password and account type are correct.
+        user = None
+        if identifier:
+            candidates = User.query.filter(
+                (User.username == identifier)
+                | (User.email == identifier.lower())
+                | (User.phone == identifier)
+            ).all()
+            for candidate in candidates:
+                if (
+                    candidate.role == role
+                    and check_password_hash(candidate.password_hash, password)
+                ):
+                    user = candidate
+                    break
 
-        if not user or not check_password_hash(user.password_hash, password) or user.role != role:
+        if not user:
             flash("Invalid login details or account type.", "error")
         elif not user.active:
             flash("Your account is inactive. Contact the administrator.", "error")
@@ -618,7 +631,7 @@ def login():
         <h2>Welcome back</h2>
         <p class="muted">Login to your MediTrust account.</p>
         <form method="POST">
-            """ + field("Username or email", "username") + """
+            """ + field("Username, email or phone number", "username") + """
             """ + field("Password", "password", "password") + """
             <label>Login as</label>
             <select name="role" required>
@@ -946,7 +959,7 @@ def profile():
 
     if request.method == "POST":
         user.full_name = request.form.get("full_name", "").strip()
-        user.phone = request.form.get("phone", "").strip()
+        user.phone = request.form.get("phone", "").strip() or None
         user.dob = request.form.get("dob", "")
         user.gender = request.form.get("gender", "")
         user.blood_group = request.form.get("blood_group", "")
